@@ -1,0 +1,86 @@
+:root {
+    --clr-neon: hsl(186 100% 69%); /* Cyberpunk Cyan */
+    --clr-bg: hsl(230 35% 7%);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    transition: all 300ms ease; /* Smooth everything */
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: var(--clr-bg);
+    font-family: "Inter", sans-serif;
+    overflow: hidden;
+}
+
+.neon_button {
+    font-size: 3rem;
+    font-weight: bold;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--clr-neon);
+    border: var(--clr-neon) 0.125em solid;
+    padding: 0.25em 1em;
+    border-radius: 0.25em;
+    position: relative;
+    
+    /* Text Glow */
+    text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
+    
+    /* Outer and Inner Glow */
+    box-shadow: inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon);
+}
+
+/* The Floor Reflection */
+.neon_button::before {
+    content: '';
+    position: absolute;
+    background: var(--clr-neon);
+    top: 140%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: perspective(1.5em) rotateX(45deg) scale(1, 0.3);
+    filter: blur(1.5em);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* The "Extra" Glow on Hover */
+.neon_button::after {
+    content: "";
+    position: absolute;
+    inset: 0; /* Shorthand for top/bottom/left/right: 0 */
+    box-shadow: 0 0 .5em .025em var(--clr-neon);
+    opacity: 0;
+    z-index: -1;
+}
+
+/* Hover States */
+.neon_button:hover,
+.neon_button:focus {
+    background: var(--clr-neon);
+    color: var(--clr-bg);
+    text-shadow: none;
+    box-shadow: 0 0 .5em 0.025em var(--clr-neon);
+}
+
+.neon_button:hover::before {
+    opacity: 0.8;
+    top: 140%; /* Brings the reflection closer */
+}
+
+.neon_button:hover::after {
+    opacity: 1;
+}
+
+/* Click Animation */
+.neon_button:active {
+    transform: scale(0.95);
+    filter: brightness(1);
+}
